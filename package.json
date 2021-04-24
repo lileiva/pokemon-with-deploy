@@ -1,15 +1,42 @@
 {
-  "name": "nextjs",
+  "name": "pokemon",
   "version": "0.1.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "lint-styles": "stylelint ./src/**/**/*.css ./styles/**/**/*.css --fix",
+    "lint-code": "eslint ./pages ./src --ext ts --ext tsx --ext js --fix",
+    "lint": "npm run lint-code && npm run lint-styles",
+    "test": "LOG_LEVEL=silent jest --coverage --no-cache"
   },
   "dependencies": {
-    "next": "10.x",
-    "react": "17.x",
-    "react-dom": "17.x"
+    "next": "10.1.3",
+    "react": "17.0.2",
+    "react-dom": "17.0.2"
+  },
+  "devDependencies": {
+    "@types/jest": "^26.0.22",
+    "@types/react": "^17.0.3",
+    "@typescript-eslint/eslint-plugin": "^4.22.0",
+    "@typescript-eslint/parser": "^4.22.0",
+    "autoprefixer": "^10.2.5",
+    "eslint": "^7.25.0",
+    "eslint-config-airbnb": "^18.2.1",
+    "eslint-import-resolver-typescript": "^2.4.0",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-jest": "^24.3.5",
+    "eslint-plugin-jest-formatting": "^2.0.1",
+    "eslint-plugin-jsx-a11y": "^6.4.1",
+    "eslint-plugin-react": "^7.23.2",
+    "eslint-plugin-react-hooks": "^4.2.0",
+    "jest": "^26.6.3",
+    "postcss": "^8.2.12",
+    "stylelint": "^13.12.0",
+    "stylelint-config-standard": "^21.0.0",
+    "tailwindcss": "^2.1.2",
+    "ts-jest": "^26.5.5",
+    "typescript": "^4.2.4"
   }
 }
