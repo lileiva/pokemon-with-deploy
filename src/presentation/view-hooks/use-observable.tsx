@@ -10,10 +10,10 @@ export function useObservable<T>(observable: Observable<T>): T {
       try {
         return subscription.unsubscribe()
       } catch {
-        return null
+        return undefined
       }
     }
   }, [observable])
 
-  return state
+  return state as T
 }
