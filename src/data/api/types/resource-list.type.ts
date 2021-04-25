@@ -3,7 +3,7 @@ type Result = {
   url: string
 }
 
-export type PokemonList = {
+export type ResourceList = {
   count: number
   next: string | null
   previous: string | null
