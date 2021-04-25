@@ -1,7 +1,10 @@
+/* eslint-disable jsx-a11y/control-has-associated-label */
 import { UIEvent, useState } from 'react'
 import { Pokemon } from '@domain/entities/pokemon.entity'
 import { useObservable } from '@hooks/use-observable'
-
+import { RightArrow } from '@presentation/icons/right-arrow'
+import { LeftArrow } from '@presentation/icons/left-arrow'
+import { Loading } from '@presentation/icons/animated-loading'
 import { HomeViewModelInterface } from './home.view-model'
 
 interface HomeInterface {
@@ -10,10 +13,10 @@ interface HomeInterface {
 
 const PokemonHeroCard = ({ pokemon }: {pokemon: Pokemon}): JSX.Element => (
   <div className="w-64 ">
-    <div className="">
-      <div className="">
-        <img className="mx-auto" src={pokemon.sprites.frontDefault} alt={`${pokemon.name}`} />
-      </div>
+    <div className="border-b border-yellow-500">
+      <img className="mx-auto" src={pokemon.sprites.frontDefault} alt={`${pokemon.name}`} />
+    </div>
+    <div className="p-4">
       <div>
         {pokemon.name}
       </div>
@@ -39,23 +42,30 @@ const PokemonEvolutionsCard = ({ pokemonList }:{pokemonList: Pokemon[]}): JSX.El
   }
 
   return (
-    <div className="flex flex-row mx-auto border border-gray-600 rounded-md justify-items-center ">
-      <div className="flex flex-col justify-center w-6 border-r border-gray-600"><button className="h-full" type="button" onClick={decrement}>{'<'}</button></div>
+    <div className="flex flex-col mx-auto border border-yellow-500 rounded-md justify-items-center ">
       {pokemonList.map((i, index) => (
-        <div key={i.id} className={index === currentIndex ? '' : 'hidden'}>
+        <div key={i.id} className={index === currentIndex ? 'transition ease-in-out duration-700' : 'hidden'}>
           <PokemonHeroCard pokemon={i} />
         </div>
-))}
+      ))}
+      {pokemonList.length > 1
+    ? (
+      <div className="flex flex-row justify-center w-full ">
+        <button className="flex items-center justify-start w-full h-12 bg-yellow-500 border border-yellow-700 hover:bg-yellow-700" type="button" onClick={decrement}><LeftArrow /></button>
+        <button className="flex items-center justify-end w-full h-12 bg-yellow-500 border border-yellow-700 hover:bg-yellow-700" type="button" onClick={increment}><RightArrow /></button>
+      </div>
+      ) : null}
 
-      <div className="flex flex-col justify-center w-6 border-l border-gray-600"><button className="h-full" type="button" onClick={increment}>{'>'}</button></div>
     </div>
 )
 }
 
 export const Home = ({ viewModel }: HomeInterface) => {
   const currentPokemonList = useObservable(viewModel.currentPokemonList$)
+  const isFetching = useObservable(viewModel.fetching$)
 
   const handleScroll = (e:UIEvent<HTMLDivElement>) => {
+    if (isFetching) return
     const { scrollHeight, scrollTop } = e.currentTarget
     console.log(scrollHeight - scrollTop)
     console.log(e.currentTarget.offsetHeight)
@@ -72,6 +82,10 @@ export const Home = ({ viewModel }: HomeInterface) => {
         {currentPokemonList?.map((pokemonList) => (
           <PokemonEvolutionsCard pokemonList={pokemonList} key={pokemonList[0].id} />
         ))}
+      </div>
+      <div className="h-32 ">
+
+        {isFetching ? <Loading /> : null }
       </div>
 
     </div>
