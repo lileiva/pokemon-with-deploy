@@ -20,11 +20,6 @@ interface PokemonStat{
   stat : Reference
 }
 
-interface PokemonType {
-  slot: number
-  type: Reference
-}
-
 export interface Pokemon {
   id: number
   name: string
@@ -42,5 +37,5 @@ export interface Pokemon {
     url: string
   }
   stats: PokemonStat[]
-  types: PokemonType[]
+  types: Set<string>
 }

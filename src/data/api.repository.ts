@@ -1,6 +1,6 @@
 import { map, mergeMap } from 'rxjs/operators'
 import { flatEvolutionChainNames } from '@data/helpers/flat-evalution-chain'
-import { forkJoin } from 'rxjs'
+import { forkJoin, of } from 'rxjs'
 import { get, getList } from './api'
 import { Pokemon } from './api/types/pokemon.type'
 import { ResourceList } from './api/types/resource-list.type'
@@ -17,12 +17,17 @@ export const ApiRepository = () => ({
   ),
   getEvolutionLists: (limit:number, offset: number) => get<ResourceList>(`${BASE_URL}/evolution-chain/`, { limit: `${limit}`, offset: `${offset}` }).pipe(
     mergeMap(
-      (evolutionChainList) => getList<EvolutionChain>(evolutionChainList.results.map(
-        ({ url }) => url,
-      )),
+      (evolutionChainList) => {
+        if (evolutionChainList.results.length === 0) return of([])
+
+        return getList<EvolutionChain>(evolutionChainList.results.map(
+          ({ url }) => url,
+        ))
+      },
     ),
     map((evolutionChain) => evolutionChain.map(flatEvolutionChainNames)),
     mergeMap((evolutionChainUrl) => {
+      if (evolutionChainUrl.length === 0) return of([])
       const getUrls = evolutionChainUrl.map((names) => getList<Pokemon>(names.map((i) => `${BASE_URL}/pokemon/${i}`)).pipe(
         map((pokemonList) => pokemonList.map(parsePokemonFromApiToPokemonEntity)),
       ))

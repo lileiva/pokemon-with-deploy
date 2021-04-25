@@ -11,6 +11,8 @@ const parsePokemonStats = (statsDTO: PokemonDTO['stats']):Pokemon['stats'] => st
   baseStat: statDTO.base_stat,
 }))
 
+const parsePokemonTypes = (typesDTO: PokemonDTO['types']):Pokemon['types'] => new Set(typesDTO.map((type) => type.type.name))
+
 export const parsePokemonFromApiToPokemonEntity = (pokemonDTO : PokemonDTO): Pokemon => ({
   ...pokemonDTO,
   baseExperience: pokemonDTO.base_experience,
@@ -19,4 +21,7 @@ export const parsePokemonFromApiToPokemonEntity = (pokemonDTO : PokemonDTO): Pok
     frontDefault: pokemonDTO.sprites.front_default,
   },
   stats: parsePokemonStats(pokemonDTO.stats),
+  types: parsePokemonTypes(pokemonDTO.types),
+  weight: Number(pokemonDTO.weight),
+  height: Number(pokemonDTO.height),
 })
