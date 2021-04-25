@@ -24,6 +24,7 @@ module.exports = {
     'import',
   ],
   rules: {
+    indent: 'off',
     'jest/no-done-callback': 'off',
     'react/react-in-jsx-scope': 'off',
     'react/require-default-props': 'off',
@@ -31,7 +32,19 @@ module.exports = {
     'react/jsx-filename-extension': [1, { extensions: ['.tsx'] }],
     'react/prop-types': 'off',
     'import/prefer-default-export': 'off',
+    'import/extensions': [
+      'error',
+      'ignorePackages',
+      {
+        ts: 'never',
+        tsx: 'never',
+      },
+    ],
     semi: [2, 'never'],
+  },
+  globals: {
+    React: true,
+    JSX: true,
   },
   settings: {
     'import/extensions': ['.ts', '.tsx'],
