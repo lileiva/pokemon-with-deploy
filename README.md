@@ -9,7 +9,7 @@ Librerias/framework usados
 * rxjs.
 * react + next js.
 
-## consideraciones
+# consideraciones
 * no se explota a fondo el server side rendering de next a proposito para evitar el acoplamiento del código al framework de UI.
 
 * los test que hay son basicos y deberían agregarse test del  view-model.
