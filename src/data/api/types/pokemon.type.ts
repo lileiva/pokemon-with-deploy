@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 interface Reference {
   name: string
   url: string
@@ -15,6 +16,6 @@ export interface Pokemon {
   weight: number
   types: PokemonType[]
   sprites: {
-    frontDefault: string
+    front_default: string
   }
 }

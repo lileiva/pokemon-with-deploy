@@ -8,5 +8,5 @@ export const parsePokemonFromApiToPokemonEntity = (pokemonDTO : PokemonDTO): Pok
   types: parsePokemonTypes(pokemonDTO.types),
   weight: Number(pokemonDTO.weight),
   height: Number(pokemonDTO.height),
-  imageUrl: pokemonDTO.sprites.frontDefault,
+  imageUrl: pokemonDTO.sprites.front_default,
 })

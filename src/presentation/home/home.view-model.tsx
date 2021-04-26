@@ -40,6 +40,7 @@ const isBetween = (value:number, { min, max }:RangeInterface) => {
 export const HomeViewModel = (pokemonUseCase: PokemonUseCaseInterface): HomeViewModelInterface => {
   let requestedTimes = -1
   const fetching$ = new BehaviorSubject<boolean>(true)
+  let loadCompleted = false
   const getMore$ = new BehaviorSubject<void>(undefined)
   const pokemonTypeInput$ = new BehaviorSubject<string | undefined>(undefined)
   const pokemonHeightInput$ = new ReplaySubject<RangeInterface>(1)
@@ -63,6 +64,9 @@ export const HomeViewModel = (pokemonUseCase: PokemonUseCaseInterface): HomeView
     filter((i) => i !== undefined),
     map((requestedPokemonList) => {
       pokemonList = [...pokemonList, ...requestedPokemonList as Pokemon[][]]
+      if (requestedPokemonList?.length !== NUMBER_OF_VALUES) {
+        loadCompleted = true
+      }
       return pokemonList
     }),
     mergeMap((allPokemonList) => combineLatest([pokemonTypeInput$,
@@ -95,7 +99,7 @@ export const HomeViewModel = (pokemonUseCase: PokemonUseCaseInterface): HomeView
     pokemonWeightInput$,
     currentPokemonList$,
     getMore$,
-    fetching$: from(fetching$),
+    fetching$: from(fetching$).pipe(map((value) => (loadCompleted ? false : value))),
     types$,
   }
 }
