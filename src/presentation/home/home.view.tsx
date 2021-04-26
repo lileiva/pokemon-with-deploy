@@ -62,8 +62,8 @@ export const Home = ({ viewModel }: HomeInterface) => {
         <HomeFilters
           types={types}
           handleSelect={handleSelect}
-          handleHeightChange={handleWeightChange}
-          handleWeightChange={handleHeightChange}
+          handleHeightChange={handleHeightChange}
+          handleWeightChange={handleWeightChange}
         />
         <div className="grid grid-flow-row gap-3 xl:grid-cols-4 md:grid-cols-2 sm:grid-cols-1">
           {currentPokemonList?.map((pokemonList) => (
