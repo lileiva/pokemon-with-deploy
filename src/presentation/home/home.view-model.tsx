@@ -1,10 +1,10 @@
 import { Pokemon } from '@domain/entities/pokemon.entity'
 import { PokemonUseCaseInterface } from '@domain/use-cases/pokemon.use-case'
 import {
-  Observable, ReplaySubject, BehaviorSubject, from, of, interval,
+  Observable, ReplaySubject, BehaviorSubject, from, of, combineLatest,
 } from 'rxjs'
 import {
-  mergeMap, map, tap, catchError, filter, take, skip, share,
+  mergeMap, map, tap, catchError, filter, share,
 } from 'rxjs/operators'
 
 interface RangeInterface {
@@ -64,23 +64,14 @@ export const HomeViewModel = (pokemonUseCase: PokemonUseCaseInterface): HomeView
       pokemonList = [...pokemonList, ...requestedPokemonList as Pokemon[][]]
       return pokemonList
     }),
-    mergeMap((allPokemonList) => pokemonTypeInput$
+    mergeMap((allPokemonList) => combineLatest([pokemonTypeInput$,
+      pokemonHeightInput$, pokemonWeightInput$])
       .pipe(
-        map((type) => allPokemonList
+        map(([type, heightRange, weightRange]) => allPokemonList
           .map((evolutionList) => evolutionList
+            .filter(({ height }) => isBetween(height, heightRange))
+            .filter(({ weight }) => isBetween(weight, weightRange))
             .filter(({ types }) => types.has(`${type}`) || type === undefined))),
-      )),
-    mergeMap((allPokemonList) => pokemonHeightInput$
-      .pipe(
-        map((range) => allPokemonList
-          .map((evolutionList) => evolutionList
-            .filter(({ height }) => isBetween(height, range)))),
-      )),
-    mergeMap((allPokemonList) => pokemonWeightInput$
-      .pipe(
-        map((range) => allPokemonList
-          .map((evolutionList) => evolutionList
-            .filter(({ weight }) => isBetween(weight, range)))),
       )),
     map((allPokemonList) => allPokemonList
       .filter((evolutionList) => evolutionList.length > 0) as Pokemon[][]),
