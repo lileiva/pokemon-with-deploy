@@ -6,7 +6,7 @@ const flatChain = (chain: EvolutionChain['chain']):EvolutionChain['chain'][] => 
   return [chain, flatEvolves].flat()
 }
 
-export const flatEvolutionChainNames = (evolutionChain: EvolutionChain): string[] => {
+export const flatEvolutionChainIds = (evolutionChain: EvolutionChain): string[] => {
   const chain = flatChain(evolutionChain.chain)
   return chain.map((i) => i.species.url.split('pokemon-species/')[1])
 }

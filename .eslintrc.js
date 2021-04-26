@@ -24,6 +24,7 @@ module.exports = {
     'import',
   ],
   rules: {
+    ident: 'off',
     'jest/no-done-callback': 'off',
     'react/react-in-jsx-scope': 'off',
     'react/require-default-props': 'off',

@@ -3,7 +3,7 @@ import { Pokemon } from '@domain/entities/pokemon.entity'
 export const PokemonCard = ({ pokemon }: {pokemon: Pokemon}): JSX.Element => (
   <div className="w-64 ">
     <div className="border-b border-yellow-500">
-      <img className="mx-auto" src={pokemon.sprites.frontDefault} alt={`${pokemon.name}`} />
+      <img className="mx-auto" src={pokemon.imageUrl} alt={`${pokemon.name}`} />
     </div>
     <div className="p-4">
       <div className="text-2xl">

@@ -1,10 +1,11 @@
 import { Pokemon } from '@domain/entities/pokemon.entity'
 import { PokemonUseCaseInterface } from '@domain/use-cases/pokemon.use-case'
+import { PokemonTypes } from '@presentation/constants/pokemon.types'
 import {
-  Observable, ReplaySubject, BehaviorSubject, from, of, combineLatest,
+  Observable, ReplaySubject, BehaviorSubject, from, of, combineLatest, interval,
 } from 'rxjs'
 import {
-  mergeMap, map, tap, catchError, filter, share,
+  mergeMap, map, tap, catchError, filter, share, skip, take,
 } from 'rxjs/operators'
 
 interface RangeInterface {
@@ -43,7 +44,7 @@ export const HomeViewModel = (pokemonUseCase: PokemonUseCaseInterface): HomeView
   const pokemonTypeInput$ = new BehaviorSubject<string | undefined>(undefined)
   const pokemonHeightInput$ = new ReplaySubject<RangeInterface>(1)
   const pokemonWeightInput$ = new ReplaySubject<RangeInterface>(1)
-  const types$ = new BehaviorSubject<Set<string>>(new Set())
+  const types$ = new BehaviorSubject<Set<string>>(PokemonTypes)
 
   let pokemonList:Pokemon[][] = []
 
@@ -79,24 +80,14 @@ export const HomeViewModel = (pokemonUseCase: PokemonUseCaseInterface): HomeView
     share(),
   )
 
-  // pokemonHeightInput$.subscribe((type) => console.log(type, 'type'))
-  // interval(800).pipe(skip(1), take(20)).subscribe(
-  //   {
-  //     next: () => {
-  //       getMore$.next()
-  //     },
-  //     complete: () => fetching$.next(false),
-  //   },
-  // )
-
-  currentPokemonList$.subscribe({
-    next: () => {
-      types$.next(new Set(pokemonList
-        .flat()
-        .map((pokemon) => Array.from(pokemon.types))
-        .flat()))
+  interval(1000).pipe(skip(1), take(20)).subscribe(
+    {
+      next: () => {
+        getMore$.next()
+      },
+      complete: () => fetching$.next(false),
     },
-  })
+  )
 
   return {
     pokemonTypeInput$,

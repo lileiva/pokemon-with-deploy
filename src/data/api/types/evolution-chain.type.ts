@@ -4,11 +4,10 @@ interface Chain {
     name: string
     url: string
   }
-  evolves_to?:[Chain]
+  evolves_to?: Chain[]
 }
 
 export interface EvolutionChain {
-  id: string
   name: string
   chain: Chain
 }

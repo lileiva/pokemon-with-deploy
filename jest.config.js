@@ -29,5 +29,5 @@ module.exports = {
     'tests',
     '(/src/.*|(.|/)).types.ts?$',
   ], // Don't include anything else in coverage
-  moduleFileExtensions: ['ts', 'tsx', 'json', 'node'],
+  moduleFileExtensions: ['js', 'ts', 'tsx', 'json', 'node'],
 }

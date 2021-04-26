@@ -21,8 +21,10 @@
     "rxjs": "^6.6.7"
   },
   "devDependencies": {
+    "@types/faker": "^5.5.3",
     "@types/jest": "^26.0.22",
     "@types/react": "^17.0.3",
+    "@types/rosie": "^0.0.39",
     "@typescript-eslint/eslint-plugin": "^4.22.0",
     "@typescript-eslint/parser": "^4.22.0",
     "autoprefixer": "^10.2.5",
@@ -35,8 +37,10 @@
     "eslint-plugin-jsx-a11y": "^6.4.1",
     "eslint-plugin-react": "^7.23.2",
     "eslint-plugin-react-hooks": "^4.2.0",
+    "faker": "^5.5.3",
     "jest": "^26.6.3",
     "postcss": "^8.2.12",
+    "rosie": "^2.1.0",
     "stylelint": "^13.12.0",
     "stylelint-config-standard": "^21.0.0",
     "tailwindcss": "^2.1.2",
