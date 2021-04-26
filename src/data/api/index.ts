@@ -4,3 +4,8 @@ export {
   get,
   getList,
 }
+
+export default {
+  get,
+  getList,
+}
